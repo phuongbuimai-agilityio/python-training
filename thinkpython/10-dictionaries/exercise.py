@@ -2,7 +2,7 @@
 # and returns True if there is any element that appears in the sequence more than once.
 
 
-def value_counts(sequence):
+def value_counts(sequence: int | str | list) -> dict:
     """
     Count the occurrences of each element in a sequence.
 
@@ -36,7 +36,7 @@ def value_counts(sequence):
     return counter
 
 
-def has_duplicates(sequence):
+def has_duplicates(sequence: int | str | list) -> bool:
     """Check whether any element in a sequence appears more than once.
 
     Args:
@@ -69,7 +69,7 @@ print(has_duplicates([1, 2, 3]))
 # like the result from value_counts. It should loop through the dictionary and return a list of keys that have counts greater than 1
 
 
-def find_repeats(input_dict):
+def find_repeats(input_dict: dict) -> list:
     """Find keys with values greater than 1 in a dictionary.
 
     Args:

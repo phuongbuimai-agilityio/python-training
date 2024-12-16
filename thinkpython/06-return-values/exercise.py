@@ -1,7 +1,7 @@
 # Exercise 1: Write a boolean function, is_between(x, y, z), that returns True if  x<y<z  or if  z<y<x , and False otherwise.
 
 
-def is_between(x, y, z):
+def is_between(x: int, y: int, z: int) -> bool:
     """
     Check if a value is between two other values, considering both ascending and descending orders.
 
@@ -51,7 +51,7 @@ print(is_between(2, 2, 2))  # False (equality is not considered "between")
 # Write a function named ackermann that evaluates the Ackermann function. What happens if you call ackermann(5, 5)?
 
 
-def ackermann(m, n):
+def ackermann(m: int, n: int) -> int:
     """
     Compute the Ackermann function, a classic example of a recursive function that grows very quickly.
 

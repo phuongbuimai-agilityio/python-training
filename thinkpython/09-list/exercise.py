@@ -8,7 +8,7 @@
 
 
 # Remove whitespace, and convert to lowercase
-def remove_whitespace(word):
+def remove_whitespace(word: str) -> str:
     """
     Remove all whitespace from a given string and convert it to lowercase.
 
@@ -35,7 +35,7 @@ def remove_whitespace(word):
     return word
 
 
-def is_anagram(word1, word2):
+def is_anagram(word1: str, word2: str) -> bool:
     """
     Check if two words are anagrams, ignoring spaces and case.
 
@@ -72,7 +72,7 @@ print(is_anagram("apple", "banana"))  # False
 # that takes as an argument a string that contains any number of words separated by spaces.
 
 
-def reverse_sentence(input_string):
+def reverse_sentence(input_string: str) -> str:
     """
     Reverse the order of words in a sentence.
 

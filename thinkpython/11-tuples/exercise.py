@@ -18,7 +18,7 @@ print(dict)
 
 
 # Exercise 3: Write a function called most_frequent_letters that takes a string and prints the letters in decreasing order of frequency.
-def most_frequent_letters(string):
+def most_frequent_letters(string: str) -> list:
     """
     Analyze and print letter frequencies in a given string.
 
@@ -29,8 +29,10 @@ def most_frequent_letters(string):
         string (str): The input string to analyze.
 
     Returns:
-        None: Prints letter frequencies directly to the console.
-
+        list[tuple[str, int]]: A list of tuples where each tuple contains:
+            - str: A single character from the input string
+            - int: The number of times that character appears
+            The list is sorted by frequency in descending order.
     Process:
         1. Convert string to lowercase
         2. Filter out non-alphabetic characters
@@ -39,13 +41,7 @@ def most_frequent_letters(string):
 
     Examples:
         >>> most_frequent_letters('hello world')
-        o: 2
-        l: 3
-        h: 1
-        e: 1
-        w: 1
-        r: 1
-        d: 1
+        [('l', 3), ('o', 2), ('h', 1), ('e', 1), ('w', 1), ('r', 1), ('d', 1)]
     """
 
     # Lower all letters, check alpha

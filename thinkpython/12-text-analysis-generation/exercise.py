@@ -2,7 +2,7 @@
 from collections import Counter
 
 
-def count_trigrams(text, case_insensitive=True):
+def count_trigrams(text: str, case_insensitive: bool = True) -> Counter:
     """
     Count and analyze trigrams (sequences of three consecutive words) in a given text.
 
@@ -62,7 +62,7 @@ def count_trigrams(text, case_insensitive=True):
 
 
 # Helper function to print sorted trigrams
-def print_trigrams(counter):
+def print_trigrams(counter: Counter) -> None:
     """
     Print trigrams and their counts sorted by frequency (descending) and alphabetically for ties.
 

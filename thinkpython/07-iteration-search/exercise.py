@@ -1,6 +1,6 @@
 # Exercise 1: Write a function named uses_none that takes a word and a string of forbidden letters,
 # and returns True if the word does not use any of the forbidden letters.
-def uses_none(word, forbidden):
+def uses_none(word: str, forbidden: str) -> bool:
     """
     Check if a word contains none of the forbidden letters.
 
@@ -44,7 +44,7 @@ print(uses_none("apple", "abc"))
 # and that returns True if the word contains all of the letters in the string at least once.
 
 
-def uses_all(word, required):
+def uses_all(word: str, required: str) -> bool:
     """
     Check if a word contains all of the required letters.
 
