@@ -113,9 +113,8 @@ b = Baz()  # Works fine now
 print(q.should_destroy_earth())  # returns False
 print(q.id == 42)  # returns True
 
+
 # Example 4: Use properties to "future-proof" your class implementation
-
-
 class Circle:
     def __init__(self, radius):
         self._radius = radius  # Internal storage (private attribute)
@@ -153,6 +152,32 @@ print(circle.area)  # Output: 78.53981633974483
 circle.radius = 10
 print(circle.area)  # Output: 314.1592653589793
 
-# Example 5: Use the __repr__ for a machine-readable representation of a class
 
-# Example 6: Use the __str__ in a class to show a human-readable representation
+# Example 5: Use the __repr__ for a machine-readable representation of a class
+# Use the __str__ in a class to show a human-readable representation
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __repr__(self):
+        return f"Point({self.x}, {self.y})"
+
+    def __str__(self):
+        return f"({self.x}, {self.y})"
+
+
+# Create some Point objects
+p1 = Point(3, 4)
+p2 = Point(10, 20)
+
+# Print the representations
+print(repr(p1))  # Output: Point(3, 4)
+print(repr(p2))  # Output: Point(10, 20)
+
+# Printing the object directly calls __str__
+print(p1)  # Output: (3, 4)
+
+# Printing the object in a list calls __repr__
+points = [p1, p2]
+print(points)  # Output: [Point(3, 4), Point(10, 20)]

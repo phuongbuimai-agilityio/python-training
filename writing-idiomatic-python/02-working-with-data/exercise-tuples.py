@@ -52,8 +52,6 @@ output = "{name} the {animal} is {age} years old".format(
 
 print(output)
 # Example 4: Use a tuple to return multiple values from a function
-
-
 STATS_FORMAT = """Statistics:
 Mean: {mean}
 Median: {median}

@@ -3,7 +3,33 @@ import operator as op
 
 
 def apply_operation(left_operand, right_operand, operator):
+    """Apply basic arithmetic operation between two operands.
+
+    Args:
+        left_operand (number): The left operand of the operation
+        right_operand (number): The right operand of the operation
+        operator (str): The arithmetic operator to apply. Must be one of:
+            '+': addition
+            '-': subtraction
+            '*': multiplication
+            '/': division
+
+    Returns:
+        number: Result of applying the operator to the operands
+
+    Raises:
+        KeyError: If operator is not one of '+', '-', '*', '/'
+        ZeroDivisionError: If right_operand is 0 and operator is '/'
+
+    Example:
+        >>> apply_operation(10, 5, '+')
+        15
+        >>> apply_operation(10, 2, '*')
+        20
+    """
+
     operator_mapper = {"+": op.add, "-": op.sub, "*": op.mul, "/": op.truediv}
+
     return operator_mapper[operator](left_operand, right_operand)
 
 
