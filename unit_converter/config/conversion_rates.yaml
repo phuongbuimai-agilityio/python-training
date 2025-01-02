@@ -1,0 +1,25 @@
+length:
+  meters:
+    kilometers: 0.001
+  kilometers:
+    meters: 1000
+
+weight:
+  kilograms:
+    grams: 1000
+  grams:
+    kilograms: 0.001
+
+temperature:
+  celsius:
+    fahrenheit:
+      formula: "value * 9/5 + 32"
+  fahrenheit:
+    celsius:
+      formula: "(value - 32) * 5/9"
+
+liquid:
+  liters:
+    milliliters: 1000
+  milliliters:
+    liters: 0.001
