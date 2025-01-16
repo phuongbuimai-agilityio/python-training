@@ -1,5 +1,3 @@
-import unittest
-
 from .timeseries import TimeSeries
 from .stock_signal_enum import StockSignal
 
@@ -19,14 +17,47 @@ class Stock:
 
     @property
     def price(self):
+        """Returns the current price of the Stock
+        >>> from datetime import datetime
+        >>> stock = Stock("GOOG")
+        >>> stock.update(datetime(2011, 10, 3), 10)
+        >>> stock.price
+        10
+        The method will return the latest price by timestamp, so even
+        if updates are out of order, it will return the latest one
+        >>> stock = Stock("GOOG")
+        >>> stock.update(datetime(2011, 10, 3), 10)
+        Now, let us do an update with a date that is earlier than the
+        previous one
+        >>> stock.update(datetime(2011, 10, 2), 5)
+        And the method still returns the latest price
+        >>> stock.price
+        10
+        If there are no updates, then the method returns None
+        >>> stock = Stock("GOOG")
+        >>> print(stock.price)
+        None
+        """
         try:
             return self.history[-1].value
         except IndexError:
             return None
 
     def is_increasing_trend(self):
-        """Checks if the stock price has increased in the last 3 updates"""
-        return self.history[-3].value < self.history[-2].value < self.history[-1].value
+        """Returns True if the past three values have been strictly
+        increasing
+        Returns False if there have been less than three updates
+        so far
+        >>> stock = Stock("GOOG")
+        >>> stock.is_increasing_trend()
+        False
+        """
+        try:
+            return (
+                self.history[-3].value < self.history[-2].value < self.history[-1].value
+            )
+        except IndexError:
+            return False
 
     def _is_short_term_crossover_below_to_above(
         self, prev_short_term_ma, prev_long_term_ma, short_term_ma, long_term_ma
@@ -84,4 +115,6 @@ class Stock:
 
 
 if __name__ == "__main__":
-    unittest.main()
+    import doctest
+
+    doctest.testmod()
