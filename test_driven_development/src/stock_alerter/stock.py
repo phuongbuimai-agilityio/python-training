@@ -11,9 +11,26 @@ class Stock:
         self.history = TimeSeries()
 
     def update(self, timestamp, price):
+        """
+        Update the price of the stock at a given timestamp
+
+        >>> from datetime import datetime
+        >>> stock = Stock("GOOG")
+        >>> stock.update(datetime(2011, 10, 3), 10)
+        >>> stock.price
+        10
+
+        The method will raise a ValueError exception if the price is negative
+
+        >>> stock.update(datetime(2011, 10, 3), -1)
+        Traceback (most recent call last):
+            ...
+        ValueError: Price must be positive
+        """
         if price < 0:
             raise ValueError("Price must be positive")
         self.history.update(timestamp, price)
+        self.updated.fire(self)
 
     @property
     def price(self):
@@ -112,9 +129,3 @@ class Stock:
 
         # Return Neutral signal
         return StockSignal.neutral
-
-
-if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()
