@@ -22,7 +22,12 @@ class PrintActionTest(unittest.TestCase):
 
     # Option 3: Using as a method decorator
     @mock.patch("builtins.print")
-    def test_executing_action_prints_message(mock_print):
+    def test_executing_action_prints_message(self, mock_print):
+        """Test that executing an action prints a message
+
+        Args:
+            mock_print (_type_): mock of the print function
+        """
         action = PrintAction()
         action.execute("GOOG > $10")
         mock_print.assert_called_with("GOOG > $10")

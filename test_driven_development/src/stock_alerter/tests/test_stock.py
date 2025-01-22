@@ -48,6 +48,14 @@ class StockTest(unittest.TestCase):
             self.goog.update(datetime(2014, 2, 13), -1)
 
     def test_stock_price_should_give_the_latest_price(self):
+        """Test that the price of a stock is the latest price
+
+        Test Steps:
+        1. Update stock price on 2014-02-13 to 10.0
+        2. Update stock price on 2014-02-14 to 8.4
+        3. Verify that the current price is 8.4 (the latest update)
+        """
+
         self.goog.update(datetime(2014, 2, 13), price=10)
         self.goog.update(datetime(2014, 2, 14), price=8.4)
         # The delta is 0.0001, which means that the test will pass
@@ -59,7 +67,11 @@ class StockTrendTest(unittest.TestCase):
     def setUp(self):
         self.goog = Stock("GOOG")
 
-    def given_a_series_of_prices(self, prices):
+    def given_a_series_of_prices(self, prices: list):
+        """
+        Helper method to create a series of prices for a stock
+        and update the stock object with the prices
+        """
         timestamps = [
             datetime(2014, 2, 12),
             datetime(2014, 2, 13),
@@ -70,13 +82,16 @@ class StockTrendTest(unittest.TestCase):
         self.assertTrue(self.goog.is_increasing_trend())
 
     def test_increasing_trend_is_true_if_price_increase_for_3_updates(self):
+        """Test that the increasing trend is True if the price increases for 3 updates"""
         self.given_a_series_of_prices([10, 11, 12])
         self.assertTrue(self.goog.is_increasing_trend())
 
     def test_increasing_trend_is_false_if_price_descreases(self):
+        """Test that the increasing trend is False if the price decreases for 3 updates"""
         self.given_a_series_of_prices([8, 12, 10])
         self.assertFalse(self.goog.is_increasing_trend())
 
     def test_increasing_trend_is_false_if_price_equal(self):
+        """Test that the increasing trend is False if the price is equal for 3 updates"""
         self.given_a_series_of_prices([8, 10, 10])
         self.assertFalse(self.goog.is_increasing_trend())

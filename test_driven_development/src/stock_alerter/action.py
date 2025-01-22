@@ -12,10 +12,15 @@ class EmailAction:
 
     from_email = "alerts@stocks.com"
 
-    def __init__(self, to):
+    def __init__(self, to: str) -> None:
         self.to_email = to
 
-    def execute(self, content):
+    def execute(self, content: str) -> None:
+        """Send an email using SMTP.
+
+        Args:
+            content (str): The content of the email.
+        """
         msg = MIMEText(content)
         msg["Subject"] = "New Stocks Alert"
         msg["From"] = self.from_email

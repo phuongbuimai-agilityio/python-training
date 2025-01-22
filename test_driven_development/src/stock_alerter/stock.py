@@ -1,3 +1,5 @@
+import datetime
+
 from .timeseries import TimeSeries
 from .stock_signal_enum import StockSignal
 
@@ -10,7 +12,7 @@ class Stock:
         self.symbol = symbol
         self.history = TimeSeries()
 
-    def update(self, timestamp, price):
+    def update(self, timestamp: datetime, price: float) -> None:
         """
         Update the price of the stock at a given timestamp
 
@@ -77,16 +79,56 @@ class Stock:
             return False
 
     def _is_short_term_crossover_below_to_above(
-        self, prev_short_term_ma, prev_long_term_ma, short_term_ma, long_term_ma
-    ):
+        self,
+        prev_short_term_ma: float,
+        prev_long_term_ma: float,
+        short_term_ma: float,
+        long_term_ma: float,
+    ) -> bool:
         return prev_long_term_ma > prev_short_term_ma and long_term_ma < short_term_ma
 
     def _is_short_term_crossover_above_to_below(
-        self, prev_short_term_ma, prev_long_term_ma, short_term_ma, long_term_ma
-    ):
+        self,
+        prev_short_term_ma: float,
+        prev_long_term_ma: float,
+        short_term_ma: float,
+        long_term_ma: float,
+    ) -> bool:
         return prev_long_term_ma < prev_short_term_ma and long_term_ma > short_term_ma
 
-    def get_crossover_signal(self, on_date):
+    def get_crossover_signal(self, on_date: datetime) -> StockSignal:
+        """
+        Determine the stock trading signal based on moving average crossover analysis.
+
+        This method implements a technical analysis strategy using moving averages to
+        generate trading signals. It compares short-term and long-term moving averages
+        to identify potential buy, sell, or neutral market conditions.
+
+        The method uses two moving averages:
+        1. Short-term moving average (typically over a shorter time period)
+        2. Long-term moving average (typically over a longer time period)
+
+        Signal generation logic:
+        - Buy Signal: When short-term MA crosses above long-term MA
+        - Sell Signal: When short-term MA crosses below long-term MA
+        - Neutral Signal: No significant crossover detected
+
+        Args:
+            on_date (datetime): The specific date for which to calculate the crossover signal.
+
+        Returns:
+            StockSignal: The generated trading signal (buy, sell, or neutral).
+                - StockSignal.buy: Indicates a potential buying opportunity
+                - StockSignal.sell: Indicates a potential selling opportunity
+                - StockSignal.neutral: No clear trading signal detected
+
+        Raises:
+            ValueError: If insufficient historical data is available for analysis.
+
+        Note:
+            - Requires at least (LONG_TERM_TIMESPAN + 1) historical price points
+            - Uses closing prices for moving average calculations
+        """
         NUM_DAYS = self.LONG_TERM_TIMESPAN + 1
         closing_price_list = self.history.get_closing_price_list(on_date, NUM_DAYS)
 
