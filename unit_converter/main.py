@@ -46,15 +46,16 @@ def initialize() -> None:
         result = perform_conversion(option, source_unit, target_unit, value)
 
         # Handle history
-        handle_history(
-            option,
-            source_unit,
-            target_unit,
-            value,
-            result,
-            input_handler,
-            history_manager,
-        )
+        params = {
+            "option": option,
+            "source_unit": source_unit,
+            "target_unit": target_unit,
+            "value": value,
+            "result": result,
+            "input_handler": input_handler,
+            "history_manager": history_manager,
+        }
+        handle_history(params)
         print("Thank you for using the Unit Converter!")
     except KeyboardInterrupt:
         print("\nGoodbye!")
@@ -141,15 +142,7 @@ def perform_conversion(
     return result
 
 
-def handle_history(
-    option: int,
-    source_unit: str,
-    target_unit: str,
-    value: float,
-    result: float,
-    input_handler: InputHandler,
-    history_manager: HistoryManager,
-) -> None:
+def handle_history(params: dict) -> None:
     """
     Manage the saving and viewing of conversion history based on user preferences.
 
@@ -170,6 +163,13 @@ def handle_history(
     Returns:
         None: The function performs actions based on user input but does not return a value.
     """
+    option = params["option"]
+    source_unit = params["source_unit"]
+    target_unit = params["target_unit"]
+    value = params["value"]
+    result = params["result"]
+    input_handler = params["input_handler"]
+    history_manager = params["history_manager"]
     # Save to history
     save_to_history = input_handler.ask_save_to_history()
     if save_to_history == "y":

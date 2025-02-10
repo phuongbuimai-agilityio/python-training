@@ -91,3 +91,11 @@ unit_converter/
    ```bash
    uv run main.py
    ```
+7. Run unit tests:
+   ```bash
+   coverage run -m unittest tests/<test_file>
+   ```
+8. Generate coverage report:
+   ```bash
+   coverage report -m
+   ```
