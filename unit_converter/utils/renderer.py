@@ -1,3 +1,4 @@
+import sys
 from constants import CONVERSION_TYPES
 
 
@@ -13,17 +14,20 @@ def render_conversion_options() -> None:
     print("==============")
 
 
-def render_unit_by_conversion_type(option: int) -> None:
+def render_unit_by_conversion_type(option: int | None) -> None:
     """Display available units for the selected conversion type.
 
     Args:
         option (int): The conversion type option (1-4)
     """
-    conversion_type = CONVERSION_TYPES[option - 1]
-    print(f"\nAvailable units for {conversion_type['name']}:")
-    units = conversion_type["unit"]
-    for unit in units:
-        print(f"- {unit}")
+    if option is None:
+        sys.exit(0)
+    else:
+        conversion_type = CONVERSION_TYPES[option - 1]
+        print(f"\nAvailable units for {conversion_type['name']}:")
+        units = conversion_type["unit"]
+        for unit in units:
+            print(f"- {unit}")
 
 
 def render_result(

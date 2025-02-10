@@ -1,4 +1,3 @@
-import sys
 from constants import EXIT_OPTIONS
 from utils import validate_options_input, validate_single_unit, validate_value
 
@@ -26,7 +25,7 @@ class InputHandler:
 
         if options_input in EXIT_OPTIONS:
             print("Thank you for using the Unit Converter. Goodbye!")
-            sys.exit()
+            return None
 
         corresponding_options: int = int(options_input)
         if validate_options_input(corresponding_options):
@@ -54,16 +53,19 @@ class InputHandler:
     def get_value(self) -> float:
         """Get and validate the numeric value to convert.
 
-        Side Effects:
-            - Sets self.value with the validated float value
-
         Returns:
             float: The validated numeric value
         """
-        value = input("Enter the value to convert: ").strip()
-        if not validate_value(value):
-            return self.get_value()
-        return float(value)
+        while True:
+            value = input("Enter the value to convert: ").strip()
+            if validate_value(value):
+                try:
+                    self.value = float(value)  # Set self.value if required
+                    return self.value
+                except ValueError:
+                    print("Error: Please enter a valid numeric value.")
+            else:
+                print("Invalid input. Please try again.")
 
     def ask_save_to_history(self) -> str:
         """Asks the user if they want to save the conversion to history.

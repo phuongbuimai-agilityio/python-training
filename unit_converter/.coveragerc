@@ -1,0 +1,17 @@
+[run]
+branch = True
+
+[report]
+show_missing = True
+skip_covered = True
+fail_under = 90
+include =
+    *.py
+    converters/*.py
+    handler/*.py
+    utils/*.py
+    tests/*.py
+    tests/*/*.py
+
+[html]
+directory = coverage_html_report
