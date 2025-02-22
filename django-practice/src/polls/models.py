@@ -1,49 +1,46 @@
-import datetime
-
-from django.contrib import admin
-from django.utils import timezone
 from django.db import models
 
 from core.models import AbstractBaseModel
 
 
-class Poll(AbstractBaseModel):
-    """Poll model"""
-
-    name = models.CharField(max_length=100)
-    description = models.TextField()
-
-    def __str__(self):
-        return self.name
-
-
-class Question(AbstractBaseModel):
-    """Question model"""
-
-    question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField("date published")
-    poll = models.ForeignKey(Poll, on_delete=models.SET_NULL, null=True)
+class User(AbstractBaseModel):
+    username = models.CharField(max_length=150, unique=True)
+    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=128)
 
     def __str__(self):
-        return self.question_text
-
-    @admin.display(
-        boolean=True,
-        ordering="pub_date",
-        description="Published recently?",
-    )
-    def was_published_recently(self):
-        now = timezone.now()
-
-        return now - datetime.timedelta(days=1) <= self.pub_date <= now
+        return self.username
 
 
-class Choice(AbstractBaseModel):
-    """Choice model"""
+class Course(AbstractBaseModel):
+    """Represents a Course that students can enroll in."""
 
-    choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.choice_text
+        return self.title
+
+
+class Student(AbstractBaseModel):
+    """Student profile linked to a User."""
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
+
+
+class Enrollment(AbstractBaseModel):
+    """Tracks which students are enrolled in which courses."""
+
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    enrolled_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ["student", "course"]
+
+    def __str__(self):
+        return f"{self.student.user.username} enrolled in {self.course.title}"

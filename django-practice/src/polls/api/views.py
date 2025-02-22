@@ -1,16 +1,16 @@
 from rest_framework.permissions import AllowAny
 
 from core.api_views import BaseModelViewSet
-from ..models import Poll
-from .serializers import PollSerializer
+from ..models import Course
+from .serializers import CourseSerializer
 
 
-class PollViewSet(BaseModelViewSet):
-    """Poll view set"""
+class CourseViewSet(BaseModelViewSet):
+    """Course view set"""
 
-    resource_name = "polls"
-    serializer_class = PollSerializer
-    queryset = Poll.objects.all()
+    resource_name = "courses"
+    serializer_class = CourseSerializer
+    queryset = Course.objects.all()
     permission_classes = [AllowAny]
     http_method_names = ["get"]
 
@@ -18,4 +18,4 @@ class PollViewSet(BaseModelViewSet):
         return self.queryset.filter()
 
 
-apps = [PollViewSet]
+apps = [CourseViewSet]
