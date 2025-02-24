@@ -3,13 +3,13 @@ from django.urls import path
 from django.shortcuts import redirect
 from django.contrib.auth import logout
 
-from .models import Course, Enrollment, Student, User
+from .models import Course, CustomUser, Enrollment, Student
 
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_filter = ["is_active"]
     list_display = ["title", "is_active"]
+    list_filter = ["is_active"]
     actions = ["make_active", "make_inactive"]
 
     @admin.action(description="Mark selected courses as active")
@@ -37,7 +37,7 @@ class EnrollmentAdmin(admin.ModelAdmin):
     list_display = ["student", "course", "enrolled_at"]
 
 
-admin.site.register(User)
+admin.site.register(CustomUser)
 
 
 def admin_logout_redirect(request):

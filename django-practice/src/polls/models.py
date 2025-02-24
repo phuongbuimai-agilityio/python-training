@@ -1,13 +1,9 @@
 from django.db import models
-
+from django.contrib.auth.models import AbstractUser
 from core.models import AbstractBaseModel
 
 
-class User(AbstractBaseModel):
-    username = models.CharField(max_length=150, unique=True)
-    email = models.EmailField(unique=True)
-    password = models.CharField(max_length=128)
-
+class CustomUser(AbstractUser):
     def __str__(self):
         return self.username
 
@@ -26,7 +22,7 @@ class Course(AbstractBaseModel):
 class Student(AbstractBaseModel):
     """Student profile linked to a User."""
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user.username

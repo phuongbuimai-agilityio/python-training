@@ -53,18 +53,6 @@ ROOT_URLCONF = "config.urls"
 # https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = "config.wsgi.application"
 
-# Redirect users to the dashboard after a successful login
-# https://docs.djangoproject.com/en/dev/ref/settings/#login-url
-LOGIN_URL = "/polls/login/"
-
-# Auth settings
-LOGIN_URL = "polls:login"
-LOGIN_REDIRECT_URL = "polls:index"
-LOGOUT_REDIRECT_URL = "polls:login"
-
-# Remove or comment out this line as we're handling admin logout separately
-# ADMIN_LOGOUT_REDIRECT_URL = '/admin/login/'
-
 
 # APPS
 # ------------------------------------------------------------------------------
@@ -94,13 +82,16 @@ SITE_ID = 1
 # AUTHENTICATION
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#authentication-backends
-# AUTHENTICATION_BACKENDS
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
-# AUTH_USER_MODEL
+AUTH_USER_MODEL = "polls.CustomUser"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
-# LOGIN_REDIRECT_URL
+LOGIN_REDIRECT_URL = "polls:index"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
-# LOGIN_URL
+LOGIN_URL = "polls:login"
+LOGOUT_REDIRECT_URL = "polls:login"
 
 # PASSWORDS
 # ------------------------------------------------------------------------------
