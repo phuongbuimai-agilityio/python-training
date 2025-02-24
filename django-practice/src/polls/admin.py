@@ -1,4 +1,7 @@
 from django.contrib import admin
+from django.urls import path
+from django.shortcuts import redirect
+from django.contrib.auth import logout
 
 from .models import Course, Enrollment, Student, User
 
@@ -35,3 +38,16 @@ class EnrollmentAdmin(admin.ModelAdmin):
 
 
 admin.site.register(User)
+
+
+def admin_logout_redirect(request):
+    """Redirects admin logout to the admin login page"""
+    logout(request)
+    return redirect("admin:login")
+
+
+admin.site.logout = admin_logout_redirect  # Override Django's default logout
+
+urlpatterns = [
+    path("admin/logout/", admin_logout_redirect, name="admin_logout"),
+]
