@@ -32,8 +32,8 @@ LANGUAGE_CODE = "en-us"
 USE_I18N = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-tz
 USE_TZ = True
-
-
+# https://docs.djangoproject.com/en/5.1/ref/contrib/sites/#enabling-the-sites-framework
+SITE_ID = 1
 # DATABASE
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
@@ -70,6 +70,7 @@ THIRD_PARTY_APPS = [
 ]
 LOCAL_APPS = [
     "polls",
+    "users",
     "students",
     "courses",
 ]
@@ -84,7 +85,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 # https://docs.djangoproject.com/en/dev/ref/settings/#authentication-backends
 # AUTHENTICATION_BACKENDS
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
-# AUTH_USER_MODEL
+AUTH_USER_MODEL = "users.UserModel"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
 # LOGIN_REDIRECT_URL
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
