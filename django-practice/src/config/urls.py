@@ -5,13 +5,15 @@ from django.urls import include, path
 
 urlpatterns = [
     path("polls/", include("polls.urls")),
+    path("students/", include("students.urls")),
+    path("courses/", include("courses.urls")),
     path("admin/", admin.site.urls),
 ]
 
 # API URLS
-urlpatterns += [
-    path(settings.API_ROOT_ENDPOINT, include("config.api_router")),
-]
+# urlpatterns += [
+#     path(settings.API_ROOT_ENDPOINT, include("config.api_router")),
+# ]
 
 if settings.DEBUG:
     if "debug_toolbar" in settings.INSTALLED_APPS:
