@@ -1,21 +1,56 @@
-from django.shortcuts import redirect
-from django.http import HttpResponse
-from django.contrib.auth.views import LoginView
-from django.contrib.auth import logout
-from django.urls import reverse_lazy, reverse
+from django.db.models import F
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
+from django.views import generic
+
+from .models import Poll, Choice, Question
 
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+class IndexView(generic.ListView):
+    template_name = "polls/index.html"
+    context_object_name = "latest_poll_list"
+
+    def get_queryset(self):
+        """ """
+        return Poll.objects.order_by("-created")[:5]
 
 
-class CustomLoginView(LoginView):
-    template_name = "polls/login.html"
-    success_url = reverse_lazy("index")  # Replace 'index' with your dashboard URL name
-    redirect_authenticated_user = True
+class DetailPollView(generic.DetailView):
+    model = Poll
+    template_name = "polls/detail.html"
+
+    def get_queryset(self):
+        """Excludes any questions that aren't published yet."""
+        return Poll.objects.all()
 
 
-def custom_logout_view(request):
-    """Logs out a user and redirects to the custom app's login page"""
-    logout(request)
-    return redirect(reverse("polls:login"))
+class ResultsView(generic.DetailView):
+    model = Poll
+    template_name = "polls/results.html"
+
+
+def vote(request, question_id):
+    print("question_id: ", question_id)
+    question = get_object_or_404(Question, pk=question_id)
+    try:
+        selected_choice = question.choice_set.get(pk=request.POST["choice"])
+    except (KeyError, Choice.DoesNotExist):
+        # Redisplay the question voting form.
+        return render(
+            request,
+            "polls/detail.html",
+            {
+                "question": question,
+                "error_message": "You didn't select a choice.",
+            },
+        )
+    else:
+        selected_choice.votes = F("votes") + 1
+        selected_choice.save()
+        # Always return an HttpResponseRedirect after successfully dealing
+        # with POST data. This prevents data from being posted twice if a
+        # user hits the Back button.
+        return HttpResponseRedirect(
+            reverse("polls:results", args=(question.poll.uuid,))
+        )

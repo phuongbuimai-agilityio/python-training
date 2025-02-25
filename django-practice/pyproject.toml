@@ -24,7 +24,6 @@ dev = [
 default-groups = ["dev"]
 
 [tool.ruff]
-[tool.ruff.lint]
 # Enable Pyflakes `E` and `F` codes by default.
 select = ["E", "F"]
 ignore = ["E501", "E741"]

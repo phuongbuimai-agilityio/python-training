@@ -1,53 +1,20 @@
 from django.contrib import admin
-from django.urls import path
-from django.shortcuts import redirect
-from django.contrib.auth import logout
 
-from .models import Course, CustomUser, Enrollment, Student
+from .models import Choice, Question
 
 
-@admin.register(Course)
-class CourseAdmin(admin.ModelAdmin):
-    list_display = ["title", "is_active"]
-    list_filter = ["is_active"]
-    actions = ["make_active", "make_inactive"]
-
-    @admin.action(description="Mark selected courses as active")
-    def make_active(self, request, queryset):
-        updated_count = queryset.update(is_active=True)
-        self.message_user(request, f"{updated_count} course(s) were marked as active.")
-
-    @admin.action(description="Mark selected courses as inactive")
-    def make_inactive(self, request, queryset):
-        updated_count = queryset.update(is_active=False)
-        self.message_user(
-            request, f"{updated_count} course(s) were marked as inactive."
-        )
+class ChoiceInline(admin.TabularInline):
+    model = Choice
+    extra = 3
 
 
-@admin.register(Student)
-class StudentAdmin(admin.ModelAdmin):
-    search_fields = ["user__username"]
-    list_filter = ["user"]
-
-
-@admin.register(Enrollment)
-class EnrollmentAdmin(admin.ModelAdmin):
-    list_filter = ["student", "course"]
-    list_display = ["student", "course", "enrolled_at"]
-
-
-admin.site.register(CustomUser)
-
-
-def admin_logout_redirect(request):
-    """Redirects admin logout to the admin login page"""
-    logout(request)
-    return redirect("admin:login")
-
-
-admin.site.logout = admin_logout_redirect  # Override Django's default logout
-
-urlpatterns = [
-    path("admin/logout/", admin_logout_redirect, name="admin_logout"),
-]
+@admin.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {"fields": ["question_text"]}),
+        ("Date information", {"fields": ["pub_date"], "classes": ["collapse"]}),
+    ]
+    inlines = [ChoiceInline]
+    list_display = ["question_text", "pub_date", "was_published_recently"]
+    list_filter = ["pub_date"]
+    search_fields = ["question_text"]

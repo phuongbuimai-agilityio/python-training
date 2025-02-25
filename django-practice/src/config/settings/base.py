@@ -53,7 +53,6 @@ ROOT_URLCONF = "config.urls"
 # https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = "config.wsgi.application"
 
-
 # APPS
 # ------------------------------------------------------------------------------
 
@@ -74,7 +73,6 @@ LOCAL_APPS = [
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
-SITE_ID = 1
 
 # MIGRATIONS
 # ------------------------------------------------------------------------------
@@ -82,16 +80,13 @@ SITE_ID = 1
 # AUTHENTICATION
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#authentication-backends
-AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
-]
+# AUTHENTICATION_BACKENDS
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
-AUTH_USER_MODEL = "polls.CustomUser"
+# AUTH_USER_MODEL
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
-LOGIN_REDIRECT_URL = "polls:index"
+# LOGIN_REDIRECT_URL
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
-LOGIN_URL = "polls:login"
-LOGOUT_REDIRECT_URL = "polls:login"
+# LOGIN_URL
 
 # PASSWORDS
 # ------------------------------------------------------------------------------
@@ -141,7 +136,7 @@ MEDIA_URL = "/media/"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "polls/templates"],
+        "DIRS": [],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
