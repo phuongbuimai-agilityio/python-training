@@ -69,7 +69,7 @@ THIRD_PARTY_APPS = [
     "rest_framework",
 ]
 LOCAL_APPS = [
-    "polls",
+    # "polls",
     "users",
     "students",
     "courses",
@@ -87,9 +87,10 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
 AUTH_USER_MODEL = "users.UserModel"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
-# LOGIN_REDIRECT_URL
+LOGIN_REDIRECT_URL = "users:index"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
-# LOGIN_URL
+LOGIN_URL = "users:login"
+LOGOUT_REDIRECT_URL = LOGIN_URL
 
 # PASSWORDS
 # ------------------------------------------------------------------------------
@@ -139,7 +140,7 @@ MEDIA_URL = "/media/"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "users/templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
