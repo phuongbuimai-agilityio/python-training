@@ -5,7 +5,7 @@ from .models import Course, Enrollment
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ["title", "description", "is_active"]
+    list_display = ["id", "title", "description", "is_active"]
     list_filter = ["is_active"]
     actions = ["make_active", "make_inactive"]
 
@@ -21,8 +21,14 @@ class CourseAdmin(admin.ModelAdmin):
             request, f"{updated_count} course(s) were marked as inactive."
         )
 
+    def id(self, obj):
+        return obj.uuid
+
 
 @admin.register(Enrollment)
 class EnrollmentAdmin(admin.ModelAdmin):
     list_filter = ["student", "course"]
-    list_display = ["student", "course", "enrolled_at"]
+    list_display = ["id", "student", "course", "enrolled_at"]
+
+    def id(self, obj):
+        return obj.uuid
