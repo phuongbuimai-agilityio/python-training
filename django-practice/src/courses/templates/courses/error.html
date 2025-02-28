@@ -1,0 +1,18 @@
+{% extends "courses/layout.html" %}
+{% block title %}
+    Error
+{% endblock title %}
+{% block content %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">Error</h4>
+                <p>{{ message }}</p>
+                <hr>
+                <p class="mb-0">
+                    <a href="{% url 'index' %}" class="alert-link">Return to homepage</a>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

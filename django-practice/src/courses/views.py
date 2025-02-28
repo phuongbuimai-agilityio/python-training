@@ -1,29 +1,37 @@
-from django.http import HttpResponse
 from django.shortcuts import render
-from django.views import generic
+from django.db.models import Q
 from .models import Course
-
-
-def index(request):
-    return HttpResponse("Hello, world. You're at the courses index.")
-
-
-class IndexView(generic.ListView):
-    template_name = "courses/index.html"
-    context_object_name = "latest_courses"
-
-    def get_queryset(self, request):
-        active_courses = Course.objects.filter(is_active=True)
-        return render(request, "courses/index.html", {"courses": active_courses})
 
 
 def courses_list(request):
     """Show active courses for anonymous users and enrolled courses for students"""
+    search_query = request.GET.get("q", "")
+    search_filter = Q(title__icontains=search_query) if search_query else Q()
+
+    filter_option = request.GET.get("filter", "")
+
     if request.user.is_authenticated:
-        student = request.user.student
-        enrolled_courses = Course.objects.filter(enrollment__student=student)
-        print(enrolled_courses)
-        return render(request, "courses/index.html", {"courses": enrolled_courses})
+        if hasattr(request.user, "student"):
+            courses = Course.objects.filter(
+                Q(enrollment__student=request.user.student) & search_filter
+            )
+            # return render(request, "courses/index.html", {"courses": enrolled_courses})
+        else:
+            return render(
+                request, "courses/error.html", {"message": "User is not a student."}
+            )
     else:
-        active_courses = Course.objects.filter(is_active=True)
-        return render(request, "courses/index.html", {"courses": active_courses})
+        courses = Course.objects.filter(Q(is_active=True) & search_filter)
+        # return render(request, "courses/index.html", {"courses": active_courses})
+
+    # Sort the courses based on the filter option
+    if filter_option == "created_asc":
+        courses = courses.order_by("created")
+    elif filter_option == "created_desc":
+        courses = courses.order_by("-created")
+
+    return render(
+        request,
+        "courses/index.html",
+        {"courses": courses, "query": search_query, "filter_option": filter_option},
+    )
