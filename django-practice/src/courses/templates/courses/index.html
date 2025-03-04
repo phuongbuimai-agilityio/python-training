@@ -9,12 +9,12 @@
         </div>
         <div class="col-md-6">
             <form method="get" action="{% url 'index' %}" class="d-flex">
-                {% if request.GET.filter %}<input type="hidden" name="filter" value="{{ request.GET.filter }}">{% endif %}
                 <input class="form-control me-2"
                        type="search"
                        placeholder="Search courses..."
                        name="q"
-                       value="{% if request.GET.q %}{{ request.GET.q }}{% else %}{% endif %}">
+                       value="{{ request.GET.q|default:'' }}"
+                       oninput="if (!this.value) this.form.submit()">
                 <button class="btn btn-outline-success me-2" type="submit">Search</button>
             </form>
         </div>
@@ -27,14 +27,12 @@
                         aria-expanded="false">Filter</button>
                 <ul class="dropdown-menu" aria-labelledby="filterDropdown">
                     <li>
-                        <a class="dropdown-item"
-                           {% if filter_option == 'created_asc' %}active{% endif %}
-                           href="?q={{ query }}?filter=created_asc">Oldest First</a>
+                        <a class="dropdown-item {% if filter == 'oldest' %}active{% endif %}"
+                           href="?filter=oldest{% if query %}&q={{ query }}{% endif %}">Oldest First</a>
                     </li>
                     <li>
-                        <a class="dropdown-item"
-                           {% if filter_option == 'created_desc' %}active{% endif %}
-                           href="?q={{ query }}?filter=created_desc">Newest First</a>
+                        <a class="dropdown-item {% if filter == 'newest' %}active{% endif %}"
+                           href="?filter=newest{% if query %}&q={{ query }}{% endif %}">Newest First</a>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
