@@ -38,6 +38,38 @@ Install the following tools on your machine:
   uv run ./src/manage.py runserver
   ```
 
+## Folder Structure
+
+```
+course-management/
+├── .venv/
+├── src/
+│   ├── manage.py
+│   ├── course_management/
+│   │   ├── __init__.py
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   ├── wsgi.py
+│   ├── students/
+│   │   ├── migrations/
+│   │   ├── __init__.py
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── models.py
+│   │   ├── tests.py
+│   │   ├── views.py
+│   ├── courses/
+│   │   ├── migrations/
+│   │   ├── __init__.py
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── models.py
+│   │   ├── tests.py
+│   │   ├── views.py
+├── .env.example
+├── README.md
+```
+
 ## Commands:
 ### uv
 - Add package
