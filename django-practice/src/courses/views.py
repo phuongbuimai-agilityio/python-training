@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator
 from django.db.models import Q
 from .models import Course
 
@@ -16,7 +17,6 @@ def courses_list(request):
             courses = Course.objects.filter(
                 Q(enrollment__student=request.user.student) & search_filter
             ).order_by(order_by)
-            # return render(request, "courses/index.html", {"courses": enrolled_courses})
         else:
             return render(
                 request, "courses/error.html", {"message": "User is not a student."}
@@ -25,12 +25,18 @@ def courses_list(request):
         courses = Course.objects.filter(Q(is_active=True) & search_filter).order_by(
             order_by
         )
-        # return render(request, "courses/index.html", {"courses": active_courses})
 
-    # Sort the courses based on the filter option
+    paginator = Paginator(courses, 5)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
 
     return render(
         request,
         "courses/index.html",
-        {"courses": courses, "query": search_query, "filter_option": filter_option},
+        {
+            "courses": page_obj,
+            "query": search_query,
+            "filter_option": filter_option,
+            "paginator": paginator,
+        },
     )
