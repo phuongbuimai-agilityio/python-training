@@ -26,7 +26,12 @@ def courses_list(request):
             order_by
         )
 
-    paginator = Paginator(courses, 5)
+    page_size = request.GET.get("page_size", "5")
+    try:
+        page_size = int(page_size)
+    except ValueError:
+        page_size = 5
+    paginator = Paginator(courses, page_size)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
