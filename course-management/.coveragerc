@@ -1,0 +1,11 @@
+[run]
+branch = True
+source = .
+
+[report]
+show_missing = True
+skip_covered = True
+fail_under = 90
+
+[html]
+directory = coverage_html_report
