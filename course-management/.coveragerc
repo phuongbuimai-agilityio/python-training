@@ -1,18 +1,11 @@
 [run]
 branch = True
-source =
-    courses
-    students
-    users
+source = .
 
 [report]
 show_missing = True
 skip_covered = True
 fail_under = 90
-include =
-    courses/*.py
-    users/*.py
-    students/*.py
 
 [html]
 directory = coverage_html_report
