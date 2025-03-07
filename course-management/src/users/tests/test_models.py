@@ -65,7 +65,6 @@ class TestUserModel(TestCase):
         self.assertEqual(retrieved_user.gender, expected_user.gender)
 
     def test_update_user(self):
-        """Test updating a user's email."""
         # Arrange
         user_data = self.valid_user_data.copy()
         user = UserModel.objects.create_user(**user_data)
@@ -80,7 +79,6 @@ class TestUserModel(TestCase):
         self.assertEqual(user.email, new_email)
 
     def test_update_user_invalid_email(self):
-        """Test updating a user's email with an invalid email pattern."""
         # Arrange
         user_data = self.valid_user_data.copy()
         user = UserModel.objects.create_user(**user_data)
