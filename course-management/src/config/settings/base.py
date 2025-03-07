@@ -90,7 +90,7 @@ AUTH_USER_MODEL = "users.UserModel"
 LOGIN_REDIRECT_URL = "courses:index"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
 LOGIN_URL = "users:login"
-LOGOUT_REDIRECT_URL = LOGIN_URL
+# LOGOUT_REDIRECT_URL
 
 # PASSWORDS
 # ------------------------------------------------------------------------------
