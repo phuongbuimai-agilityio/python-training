@@ -37,6 +37,13 @@ Install the following tools on your machine:
   ```sh
   uv run ./src/manage.py runserver
   ```
+6. Run tests with coverage:
+  ```sh
+  uv run coverage run ./src/manage.py test <folder-app>.tests --keepdb
+  uv run coverage report
+  uv run coverage html
+  ```
+
 
 ## Folder Structure
 
@@ -45,29 +52,64 @@ course-management/
 ├── .venv/
 ├── src/
 │   ├── manage.py
-│   ├── course_management/
+│   ├── config/
 │   │   ├── __init__.py
-│   │   ├── settings.py
+│   │   ├── settings/
+│   │   |   ├── __init__.py
+│   │   |   ├── base.py
+│   │   |   ├── local.py
+│   │   |   ├── production.py
+│   │   |   ├── test.py
+│   │   ├── api_router.py
+│   │   ├── asgi.py
 │   │   ├── urls.py
 │   │   ├── wsgi.py
-│   ├── students/
-│   │   ├── migrations/
+│   ├── core/
 │   │   ├── __init__.py
-│   │   ├── admin.py
-│   │   ├── apps.py
+│   │   ├── api_views.py
+│   │   ├── constants.py
 │   │   ├── models.py
-│   │   ├── tests.py
-│   │   ├── views.py
 │   ├── courses/
 │   │   ├── migrations/
+│   │   ├── static/
+│   │   ├── templates/
+│   │   ├── tests/
 │   │   ├── __init__.py
 │   │   ├── admin.py
 │   │   ├── apps.py
 │   │   ├── models.py
-│   │   ├── tests.py
 │   │   ├── views.py
+│   │   ├── urls.py
+│   ├── students/
+│   │   ├── migrations/
+│   │   ├── tests/
+│   │   ├── __init__.py
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── models.py
+│   │   ├── urls.py
+│   │   ├── views.py
+│   ├── users/
+│   │   ├── migrations/
+│   │   ├── static/
+│   │   ├── templates/
+│   │   ├── tests/
+│   │   ├── __init__.py
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── models.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   ├── utils/
+│   │   ├── __init__.py
+│   │   ├── helpers.py
 ├── .env.example
 ├── README.md
+├── uv.lock
+├── pyproject.toml
+├── .gitignore
+├── .coveragerc
+├── .pre-commit-config.yaml
 ```
 
 ## Commands:
