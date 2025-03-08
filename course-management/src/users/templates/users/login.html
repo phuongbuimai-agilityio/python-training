@@ -1,5 +1,6 @@
 {% extends "admin/login.html" %}
 {% load i18n %}
+{% load static %}
 {% block title %}
     Course Management Login
 {% endblock title %}
@@ -24,3 +25,8 @@
         </div>
     </form>
 {% endblock content %}
+{% block extrahead %}
+    <link rel="stylesheet"
+          type="text/css"
+          href="{% static 'users/css/style.css' %}">
+{% endblock extrahead %}
