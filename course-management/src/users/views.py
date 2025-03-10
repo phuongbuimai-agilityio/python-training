@@ -22,15 +22,14 @@ def login_view(request: HttpRequest) -> HttpResponse:
         HttpResponse: The HTTP response object with the rendered login form or a redirect to the index page.
     """
     if request.user.is_authenticated:
-        return redirect(reverse("index"))
+        return redirect("index")
 
-    if request.method == "POST":
-        form = AuthenticationForm(data=request.POST)
-        if form.is_valid():
-            login(request, form.get_user())
-            return redirect(reverse("index"))
-    else:
-        form = AuthenticationForm()
+    form = AuthenticationForm(request, data=request.POST or None)
+
+    if request.method == "POST" and form.is_valid():
+        login(request, form.get_user())
+        return redirect("index")
+
     return render(request, "users/login.html", {"form": form})
 
 
